@@ -28,7 +28,7 @@ interface MenuChangeEvent {
 export class LayoutService {
     _config: layoutConfig = {
         preset: 'Aura',
-        primary: 'emerald',
+        primary: 'purple',
         surface: null,
         darkTheme: false,
         menuMode: 'static'
@@ -166,6 +166,12 @@ export class LayoutService {
     onConfigUpdate() {
         this._config = { ...this.layoutConfig() };
         this.configUpdate.next(this.layoutConfig());
+
+        /* Update CSS variables for primary color para tomar estilos personalizados */
+  const primary = this.layoutConfig().primary;
+if (primary !== undefined) {
+    document.documentElement.style.setProperty('--primary-color', primary);
+}
     }
 
     onMenuStateChange(event: MenuChangeEvent) {

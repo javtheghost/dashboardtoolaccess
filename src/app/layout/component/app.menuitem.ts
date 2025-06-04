@@ -38,7 +38,8 @@ import { LayoutService } from '../service/layout.service';
                 tabindex="0"
                 pRipple
             >
-                <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
+                <i [ngClass]="item.icon" class="layout-menuitem-icon">{{ item['iconText'] }}</i>
+
                 <span class="layout-menuitem-text">{{ item.label }}</span>
                 <i class="pi pi-fw pi-angle-down layout-submenu-toggler" *ngIf="item.items"></i>
             </a>
