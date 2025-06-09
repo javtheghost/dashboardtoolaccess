@@ -10,6 +10,7 @@ import { LayoutService } from '../service/layout.service';
 
 @Component({
     // eslint-disable-next-line @angular-eslint/component-selector
+    standalone: true,
     selector: '[app-menuitem]',
     imports: [CommonModule, RouterModule, RippleModule],
     template: `
