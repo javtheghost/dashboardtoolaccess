@@ -5,9 +5,7 @@
     --code-color: var(--p-surface-200);
 } */
 :root {
-  --surface-ground: #fcfcfc; /* tu color */
-  --code-background: #1e1e1e;
-  --code-color: #c5c5c5;
-  --p-button-primary-color: #ff0000;
---p-button-primary-background: #df4cd7;
+ --surface-ground: var(--p-surface-100);
+    --code-background: var(--p-surface-900);
+    --code-color: var(--p-surface-200);
 }

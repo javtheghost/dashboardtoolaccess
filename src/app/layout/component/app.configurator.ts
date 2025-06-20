@@ -92,13 +92,9 @@ declare type SurfacesType = {
 })
 export class AppConfigurator {
     router = inject(Router);
-
+    layoutService = inject(LayoutService);
     config: PrimeNG = inject(PrimeNG);
-
-    layoutService: LayoutService = inject(LayoutService);
-
     platformId = inject(PLATFORM_ID);
-
     primeng = inject(PrimeNG);
 
     presets = Object.keys(presets);
@@ -113,9 +109,12 @@ export class AppConfigurator {
     ngOnInit() {
         if (isPlatformBrowser(this.platformId)) {
             this.onPresetChange(this.layoutService.layoutConfig().preset);
-            // Aplicar customBlue como primario por defecto
-            this.layoutService.layoutConfig.update((state) => ({ ...state, primary: 'customBlue' }));
-            this.applyTheme('primary', { name: 'customBlue', palette: this.surfaces.find(s => s.name === 'customBlue')?.palette });
+            // Asegurarse de que customBlue se aplique al inicio
+            const primary = this.layoutService.layoutConfig().primary;
+            if (primary === 'customBlue') {
+                this.applyTheme('primary', { name: 'customBlue', palette: this.layoutService.getCustomPalette('customBlue') });
+                this.layoutService.onConfigUpdate();
+            }
         }
     }
 
@@ -255,35 +254,18 @@ export class AppConfigurator {
                 900: '#183240',
                 950: '#0c1920'
             }
-        },
-        {
-            name: 'customBlue',
-            palette: {
-                0: '#eff6ff',
-                50: '#dbeafe',
-                100: '#bfdbfe',
-                200: '#93c5fd',
-                300: '#60a5fa',
-                400: '#3b82f6',
-                500: '#2563eb',
-                600: '#1d4ed8',
-                700: '#1e40af',
-                800: '#1e3a8a',
-                900: '#172554',
-                950: '#0f172a'
-            }
         }
     ];
 
     selectedPrimaryColor = computed(() => {
-        return this.layoutService.layoutConfig().primary;
+        return this.layoutService.getPrimary() ?? 'customBlue'; // Valor por defecto si es undefined
     });
 
-    selectedSurfaceColor = computed(() => this.layoutService.layoutConfig().surface);
+    selectedSurfaceColor = computed(() => this.layoutService.getSurface() ?? 'slate');
 
-    selectedPreset = computed(() => this.layoutService.layoutConfig().preset);
+    selectedPreset = computed(() => this.layoutService.layoutConfig().preset ?? 'Nora');
 
-    menuMode = computed(() => this.layoutService.layoutConfig().menuMode);
+    menuMode = computed(() => this.layoutService.layoutConfig().menuMode ?? 'static');
 
     primaryColors = computed<SurfacesType[]>(() => {
         const presetPalette = presets[this.layoutService.layoutConfig().preset as KeyOfType<typeof presets>].primitive;
@@ -293,7 +275,7 @@ export class AppConfigurator {
         colors.forEach((color) => {
             palettes.push({
                 name: color,
-                palette: presetPalette?.[color as KeyOfType<typeof presetPalette>] as SurfacesType['palette']
+                palette: presetPalette?.[color as KeyOfType<typeof presetPalette>] as SurfacesType['palette'] || this.layoutService.getCustomPalette(color)
             });
         });
 
@@ -356,7 +338,7 @@ export class AppConfigurator {
             if (preset === 'Nora') {
                 return {
                     semantic: {
-                        primary: color.palette,
+                        primary: color.palette || this.layoutService.getCustomPalette(this.selectedPrimaryColor()),
                         colorScheme: {
                             light: {
                                 primary: {
@@ -392,7 +374,7 @@ export class AppConfigurator {
             } else {
                 return {
                     semantic: {
-                        primary: color.palette,
+                        primary: color.palette || this.layoutService.getCustomPalette(this.selectedPrimaryColor()),
                         colorScheme: {
                             light: {
                                 primary: {
@@ -430,20 +412,22 @@ export class AppConfigurator {
     }
 
     updateColors(event: any, type: string, color: any) {
-        if (type === 'primary') {
-            this.layoutService.layoutConfig.update((state) => ({ ...state, primary: color.name }));
-        } else if (type === 'surface') {
-            this.layoutService.layoutConfig.update((state) => ({ ...state, surface: color.name }));
+        const primary = color.name;
+        if (type === 'primary' && primary) {
+            this.layoutService.layoutConfig.update((state) => ({ ...state, primary }));
+        } else if (type === 'surface' && primary) {
+            this.layoutService.layoutConfig.update((state) => ({ ...state, surface: primary }));
         }
         this.applyTheme(type, color);
+        this.layoutService.onConfigUpdate();
 
         event.stopPropagation();
     }
 
     applyTheme(type: string, color: any) {
-        if (type === 'primary') {
+        if (type === 'primary' && color.name) {
             updatePreset(this.getPresetExt());
-        } else if (type === 'surface') {
+        } else if (type === 'surface' && color.palette) {
             updateSurfacePalette(color.palette);
         }
     }
@@ -453,6 +437,7 @@ export class AppConfigurator {
         const preset = presets[event as KeyOfType<typeof presets>];
         const surfacePalette = this.surfaces.find((s) => s.name === this.selectedSurfaceColor())?.palette;
         $t().preset(preset).preset(this.getPresetExt()).surfacePalette(surfacePalette).use({ useDefaultOptions: true });
+        this.layoutService.onConfigUpdate();
     }
 
     onMenuModeChange(event: string) {

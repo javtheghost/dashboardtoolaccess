@@ -22,13 +22,31 @@ interface MenuChangeEvent {
     routeEvent?: boolean;
 }
 
+declare type SurfacesType = {
+    name?: string;
+    palette?: {
+        0?: string;
+        50?: string;
+        100?: string;
+        200?: string;
+        300?: string;
+        400?: string;
+        500?: string;
+        600?: string;
+        700?: string;
+        800?: string;
+        900?: string;
+        950?: string;
+    };
+};
+
 @Injectable({
     providedIn: 'root'
 })
 export class LayoutService {
     _config: layoutConfig = {
-        preset: 'Nora',
-        primary: '#6EACDA',
+        preset: 'Aura',
+        primary: 'customBlue',
         surface: null,
         darkTheme: false,
         menuMode: 'static'
@@ -40,6 +58,25 @@ export class LayoutService {
         configSidebarVisible: false,
         staticMenuMobileActive: false,
         menuHoverActive: false
+    };
+
+    // Definimos la paleta customBlue
+    customBluePalette: SurfacesType = {
+        name: 'customBlue',
+        palette: {
+           0: '#FFFFFF', // Blanco como base
+            50: '#E6ECEF', // Interpolación clara
+            100: '#C3D6E2', // Hacia azul claro
+            200: '#A0C0D5',
+            300: '#6EACDA', // Azul claro proporcionado
+            400: '#4D8ABF',
+            500: '#03346E', // Azul medio intenso como primario
+            600: '#022F64',
+            700: '#022559',
+            800: '#021A4A',
+            900: '#021526', // Azul oscuro casi negro
+            950: '#010F1C' // Más oscuro que
+        }
     };
 
     layoutConfig = signal<layoutConfig>(this._config);
@@ -132,7 +169,7 @@ export class LayoutService {
         this.transitionComplete.set(true);
         setTimeout(() => {
             this.transitionComplete.set(false);
-        });
+        }, 1000); // Ajusta el tiempo si es necesario
     }
 
     onMenuToggle() {
@@ -167,11 +204,7 @@ export class LayoutService {
         this._config = { ...this.layoutConfig() };
         this.configUpdate.next(this.layoutConfig());
 
-        /* Update CSS variables for primary color para tomar estilos personalizados */
-  const primary = this.layoutConfig().primary;
-if (primary !== undefined) {
-    document.documentElement.style.setProperty('--primary-color', primary);
-}
+
     }
 
     onMenuStateChange(event: MenuChangeEvent) {
@@ -180,5 +213,11 @@ if (primary !== undefined) {
 
     reset() {
         this.resetSource.next(true);
+    }
+
+    // Método para obtener la paleta
+    getCustomPalette(name: string): SurfacesType['palette'] | undefined {
+        if (name === 'customBlue') return this.customBluePalette.palette;
+        return undefined;
     }
 }

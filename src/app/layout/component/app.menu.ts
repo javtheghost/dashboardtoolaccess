@@ -23,9 +23,9 @@ export class AppMenu {
             {
                 label: 'Home',
                 items: [{
-                    label: 'Dashboard',
+                    label: 'Inicio',
                     icon: 'material-symbols-outlined',
-                    iconText: 'dashboard',
+                    iconText: 'home',
                     routerLink: ['/'],
                 }
                 ]
@@ -90,8 +90,31 @@ export class AppMenu {
                         routerLink: ['/pages/crud'],
                     }
                 ]
-            }
+            },
+              {
+                items: [
+                    {
+                        label: 'Categorías',
+                        iconText: 'inventory_2',
+                    icon: 'material-symbols-outlined',
 
+                        routerLink: ['/pages/categories-list'],
+                    }
+                ],
+
+            },
+              {
+                items: [
+                    {
+                        label: 'Multas y Daños',
+                        iconText: 'gavel',
+                    icon: 'material-symbols-outlined',
+
+                        routerLink: ['/pages/crud'],
+                    }
+                ],
+
+            },
         ];
     }
 }

@@ -15,34 +15,3 @@ body {
     line-height: 1.2;
 }
 /* Fondo de la barra de paginación */
-.p-paginator {
-  background-color: #03346E !important;
-  color: white !important;
-}
-
-/* Botones de página */
-.p-paginator .p-paginator-page {
-  background-color: transparent;
-  color: white !important;
-  border-color: white !important;
-}
-
-/* Botón página activo */
-.p-paginator .p-paginator-page.p-highlight {
-  background-color: white !important;
-  color: #03346E !important;
-}
-
-/* Botones anterior y siguiente */
-.p-paginator .p-paginator-prev,
-.p-paginator .p-paginator-next {
-  color: white !important;
-  border-color: white !important;
-}
-
-/* Botones anterior y siguiente hover */
-.p-paginator .p-paginator-prev:hover,
-.p-paginator .p-paginator-next:hover {
-  background-color: white !important;
-  color: #03346E !important;
-}
