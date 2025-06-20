@@ -55,12 +55,13 @@ interface ExportColumn {
         ConfirmDialogModule
     ],
     template: `
+        <p-toast></p-toast>
+
         <p-toolbar styleClass="mb-6">
             <ng-template #start>
                 <p-button label="New" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="openNew()" />
                 <p-button severity="secondary" label="Delete" icon="pi pi-trash" outlined (onClick)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length" />
             </ng-template>
-
             <ng-template #end>
                 <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
             </ng-template>
@@ -146,88 +147,137 @@ interface ExportColumn {
             </ng-template>
         </p-table>
 
-        <p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true">
-            <ng-template #content>
-                <div class="flex flex-col gap-6">
-                    <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-4" *ngIf="product.image" />
-                    <div>
-                        <label for="name" class="block font-bold mb-3">Name</label>
-                        <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus fluid />
-                        <small class="text-red-500" *ngIf="submitted && !product.name">Name is required.</small>
-                    </div>
-                    <div>
-                        <label for="description" class="block font-bold mb-3">Description</label>
-                        <textarea id="description" pTextarea [(ngModel)]="product.description" required rows="3" cols="20" fluid></textarea>
-                    </div>
+        <!-- Diálogo para crear/editar producto -->
+       <!-- Diálogo para crear/editar producto -->
+<p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true">
+    <ng-template #content>
+        <div class="flex flex-col gap-6">
+            <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-4" *ngIf="product.image" />
 
-                    <div>
-                        <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
-                        <p-select [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses" optionLabel="label" optionValue="label" placeholder="Select a Status" fluid />
-                    </div>
+            <div>
+                <label for="name" class="block font-bold mb-3">Name</label>
+                <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus fluid />
+                <small class="text-red-500" *ngIf="submitted && !product.name">Name is required.</small>
+            </div>
 
-                    <div>
-                        <span class="block font-bold mb-4">Category</span>
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category1" name="category" value="Accessories" [(ngModel)]="product.category" />
-                                <label for="category1">Accessories</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category2" name="category" value="Clothing" [(ngModel)]="product.category" />
-                                <label for="category2">Clothing</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category3" name="category" value="Electronics" [(ngModel)]="product.category" />
-                                <label for="category3">Electronics</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category4" name="category" value="Fitness" [(ngModel)]="product.category" />
-                                <label for="category4">Fitness</label>
-                            </div>
-                        </div>
-                    </div>
+            <div>
+                <label for="description" class="block font-bold mb-3">Description</label>
+                <textarea id="description" pTextarea [(ngModel)]="product.description" required rows="3" cols="20" fluid></textarea>
+            </div>
 
-                    <div class="grid grid-cols-12 gap-4">
-                        <div class="col-span-6">
-                            <label for="price" class="block font-bold mb-3">Price</label>
-                            <p-inputnumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US" fluid />
-                        </div>
-                        <div class="col-span-6">
-                            <label for="quantity" class="block font-bold mb-3">Quantity</label>
-                            <p-inputnumber id="quantity" [(ngModel)]="product.quantity" fluid />
-                        </div>
+            <div>
+                <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
+                <p-select [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses" optionLabel="label" optionValue="label" placeholder="Select a Status" fluid />
+            </div>
+
+            <div>
+                <span class="block font-bold mb-4">Category</span>
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="flex items-center gap-2 col-span-6">
+                        <p-radiobutton id="category1" name="category" value="Accessories" [(ngModel)]="product.category" />
+                        <label for="category1">Accessories</label>
+                    </div>
+                    <div class="flex items-center gap-2 col-span-6">
+                        <p-radiobutton id="category2" name="category" value="Clothing" [(ngModel)]="product.category" />
+                        <label for="category2">Clothing</label>
+                    </div>
+                    <div class="flex items-center gap-2 col-span-6">
+                        <p-radiobutton id="category3" name="category" value="Electronics" [(ngModel)]="product.category" />
+                        <label for="category3">Electronics</label>
+                    </div>
+                    <div class="flex items-center gap-2 col-span-6">
+                        <p-radiobutton id="category4" name="category" value="Fitness" [(ngModel)]="product.category" />
+                        <label for="category4">Fitness</label>
                     </div>
                 </div>
-            </ng-template>
+            </div>
 
-            <ng-template #footer>
-                <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()" />
-                <p-button label="Save" icon="pi pi-check" (click)="saveProduct()" />
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-6">
+                    <label for="price" class="block font-bold mb-3">Price</label>
+                    <p-inputnumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US" fluid />
+                </div>
+                <div class="col-span-6">
+                    <label for="quantity" class="block font-bold mb-3">Quantity</label>
+                    <p-inputnumber id="quantity" [(ngModel)]="product.quantity" fluid />
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #footer>
+        <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()"></p-button>
+        <p-button (click)="saveProduct()">
+            <ng-template pTemplate="content">
+                Save
             </ng-template>
-        </p-dialog>
+        </p-button>
+    </ng-template>
+</p-dialog>
+
 
         <p-confirmdialog [style]="{ width: '450px' }" />
     `,
-    providers: [MessageService, ProductService, ConfirmationService]
+    providers: [MessageService, ProductService, ConfirmationService],
+    styles: [`
+    /* Estilos para personalizar el toast */
+    :host ::ng-deep .p-toast-message-success {
+        background-color: white !important;
+        color: #2E8B57 !important;
+        border: 1px solid #2E8B57 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Oculta el ícono de check de PrimeNG */
+    :host ::ng-deep .p-toast-message-success .p-toast-message-icon {
+        display: none !important;
+    }
+
+    /* Muestra el ícono de Google Material Icons */
+    :host ::ng-deep .p-toast-message-success .p-toast-message-content::before {
+        content: "check_circle" !important;
+        font-family: 'Material Icons' !important;
+        font-size: 24px !important;
+        color: #2E8B57 !important;
+        margin-right: 8px !important;
+    }
+
+    /* Asegura que el contenido del toast se alinee correctamente */
+    :host ::ng-deep .p-toast-message-success .p-toast-message-content {
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    /* Estilos para el diálogo de confirmación */
+    :host ::ng-deep .p-confirm-dialog .p-dialog-content .pi.pi-exclamation-triangle {
+        display: none !important;
+    }
+
+    :host ::ng-deep .p-confirm-dialog .p-dialog-content::before {
+        content: "check_circle" !important;
+        font-family: 'Material Icons' !important;
+        font-size: 24px !important;
+        color: #2E8B57 !important;
+        margin-right: 8px !important;
+    }
+
+    /* Estilo para eliminar ícono del botón Save */
+    :host ::ng-deep .p-dialog-footer .p-button:not(.p-button-icon-only) .p-button-icon-left {
+        display: none !important;
+    }
+`]
 })
 export class Crud implements OnInit {
     productDialog: boolean = false;
-
     products = signal<Product[]>([]);
-
     product!: Product;
-
-    selectedProducts!: Product[] | null;
-
+    selectedProducts?: Product[] | null;
     submitted: boolean = false;
-
-    statuses!: any[];
-
+    statuses?: any[];
     @ViewChild('dt') dt!: Table;
-
-    exportColumns!: ExportColumn[];
-
-    cols!: Column[];
+    exportColumns?: ExportColumn[];
+    cols?: Column[];
 
     constructor(
         private productService: ProductService,
@@ -290,7 +340,7 @@ export class Crud implements OnInit {
                 this.selectedProducts = null;
                 this.messageService.add({
                     severity: 'success',
-                    summary: 'Successful',
+                    summary: 'Success',
                     detail: 'Products Deleted',
                     life: 3000
                 });
@@ -313,7 +363,7 @@ export class Crud implements OnInit {
                 this.product = {};
                 this.messageService.add({
                     severity: 'success',
-                    summary: 'Successful',
+                    summary: 'Success',
                     detail: 'Product Deleted',
                     life: 3000
                 });
@@ -329,14 +379,13 @@ export class Crud implements OnInit {
                 break;
             }
         }
-
         return index;
     }
 
     createId(): string {
         let id = '';
-        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (var i = 0; i < 5; i++) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        for (let i = 0; i < 5; i++) {
             id += chars.charAt(Math.floor(Math.random() * chars.length));
         }
         return id;
@@ -357,31 +406,53 @@ export class Crud implements OnInit {
 
     saveProduct() {
         this.submitted = true;
+        console.log('Guardando producto:', this.product); // Depuración
         let _products = this.products();
+
         if (this.product.name?.trim()) {
             if (this.product.id) {
-                _products[this.findIndexById(this.product.id)] = this.product;
-                this.products.set([..._products]);
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Updated',
-                    life: 3000
+                this.confirmationService.confirm({
+                    message: `Do you want to save changes to ${this.product.name}? This will update the product details.`,
+                    header: 'Confirm Update',
+                    icon: 'pi pi-exclamation-triangle',
+                    accept: () => {
+                        _products[this.findIndexById(this.product.id!)] = this.product;
+                        this.products.set([..._products]);
+                        this.messageService.add({
+
+                            severity: 'success',
+                            summary: 'Success',
+                            detail: `Updated ${this.product.name} successfully!`,
+                            life: 3000
+                        });
+                        this.productDialog = false;
+                        this.product = {};
+                    },
+                    reject: () => {
+                        console.log('Actualización cancelada'); // Depuración
+                    }
                 });
             } else {
                 this.product.id = this.createId();
                 this.product.image = 'product-placeholder.svg';
+                this.products.set([..._products, this.product]);
                 this.messageService.add({
                     severity: 'success',
-                    summary: 'Successful',
-                    detail: 'Product Created',
+                    summary: 'Success',
+                    detail: `Created ${this.product.name} successfully!`,
                     life: 3000
                 });
-                this.products.set([..._products, this.product]);
+                this.productDialog = false;
+                this.product = {};
             }
-
-            this.productDialog = false;
-            this.product = {};
+        } else {
+            console.log('Error: El nombre del producto es requerido'); // Depuración
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Name is required',
+                life: 3000
+            });
         }
     }
 }

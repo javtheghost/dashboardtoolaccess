@@ -12,7 +12,7 @@ import { LayoutService } from '../service/layout.service';
     template: `
     <div class="layout-topbar">
         <div class="layout-topbar-logo-container">
-            <button class="layout-menu-button layout-topbar-action" (click)="layoutService.onMenuToggle()">
+            <button class="layout-menu-button layout-topbar-action" *ngIf="!isAuthRoute" (click)="layoutService.onMenuToggle()">
                 <i class="pi pi-bars"></i>
             </button>
             <img src="assets/logos/logoHeader.png" alt="logo toolaccess" routerLink="/" class="layout-topbar-logo p-5 " />
@@ -85,7 +85,8 @@ import { LayoutService } from '../service/layout.service';
 })
 export class AppTopbar {
     constructor(public layoutService: LayoutService) { }
-
+// Propiedad para verificar si es una ruta de autenticación
+    isAuthRoute: boolean = window.location.pathname.includes('/login') || window.location.pathname.includes('/register');
     toggleDarkMode() {
         this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
     }
@@ -95,4 +96,6 @@ export class AppTopbar {
         console.log('Cerrando sesión...');
         // Ejemplo: this.authService.logout(); this.router.navigate(['/login']);
     }
+
+
 }
