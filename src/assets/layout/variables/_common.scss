@@ -3,7 +3,7 @@
     --secundary-color: #6EACDA;
     --hover-color: #064A9B;
     --bg-images: #E7F1EF;
-
+    --color-danger: #D9534F;
     --background-color: #03346E;
     --primary-contrast-color: var(--p-primary-contrast-color);
     --text-color: var(--p-text-color);
@@ -22,4 +22,7 @@
     --focus-ring-color: var(--p-focus-ring-color);
     --focus-ring-offset: var(--p-focus-ring-offset);
     --focus-ring-shadow: var(--p-focus-ring-shadow);
+}
+.hover-bg-secundary:hover {
+  background-color: var(--hover-color);
 }

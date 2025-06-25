@@ -32,7 +32,7 @@ interface ExportColumn {
 }
 
 @Component({
-    selector: 'app-crud',
+    selector: 'app-users-crud',
     standalone: true,
     imports: [
         CommonModule,
@@ -84,12 +84,15 @@ interface ExportColumn {
         >
             <ng-template #caption>
                 <div class="flex items-center justify-between">
-                    <h5 class="m-0 p-2">Administrar Herramientas</h5>
+                    <h5 class="m-0 p-2">Administrar Usuarios</h5>
+
                 </div>
-                <p-iconfield>
-                    <p-inputicon styleClass="pi pi-search" />
-                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
-                </p-iconfield>
+                 <p-iconfield>
+
+                        <p-inputicon styleClass="pi pi-search" />
+                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
+                    </p-iconfield>
+
             </ng-template>
             <ng-template #header>
                 <tr>
@@ -98,7 +101,7 @@ interface ExportColumn {
                     </th>
                     <th style="min-width: 16rem">Code</th>
                     <th pSortableColumn="name" style="min-width:16rem">
-                        Name
+                        Nombres
                         <p-sortIcon field="name" />
                     </th>
                     <th>Image</th>
@@ -131,7 +134,7 @@ interface ExportColumn {
                     <td>
                         <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" style="width: 64px" class="rounded" />
                     </td>
-                    <td>{{ product.price | currency: 'MXN' }}</td>
+                    <td>{{ product.price | currency: 'USD' }}</td>
                     <td>{{ product.category }}</td>
                     <td>
                         <p-rating [(ngModel)]="product.rating" [readonly]="true" />
@@ -140,18 +143,17 @@ interface ExportColumn {
                         <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)" />
                     </td>
                     <td>
-                        <!-- Botón Editar -->
-                        <p-button (click)="editProduct(product)" styleClass="custom-flat-icon-button custom-flat-icon-button-edit mr-2">
-                            <ng-template pTemplate="icon">
-                                <i class="material-symbols-outlined">edit</i>
-                            </ng-template>
+                     <p-button class="mr-2" (click)="editProduct(product)">
+                        <ng-template pTemplate="icon">
+                            <i class="material-symbols-outlined">edit</i>
+                        </ng-template>
                         </p-button>
 
-                        <!-- Botón Eliminar -->
-                        <p-button (click)="deleteProduct(product)" styleClass="custom-flat-icon-button custom-flat-icon-button-delete">
-                            <ng-template pTemplate="icon">
-                                <i class="material-symbols-outlined">delete</i>
-                            </ng-template>
+                        <!-- Botón de eliminar sin borde -->
+                        <p-button severity="danger" (click)="deleteProduct(product)">
+                        <ng-template pTemplate="icon">
+                            <i class="material-symbols-outlined">delete</i>
+                        </ng-template>
                         </p-button>
                     </td>
                 </tr>
@@ -159,179 +161,193 @@ interface ExportColumn {
         </p-table>
 
         <!-- Diálogo para crear/editar producto -->
-        <!-- Diálogo para crear/editar producto -->
-        <p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true">
-            <ng-template #content>
-                <div class="flex flex-col gap-6">
-                    <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-4" *ngIf="product.image" />
+       <!-- Diálogo para crear/editar producto -->
+<p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true">
+    <ng-template #content>
+        <div class="flex flex-col gap-6">
+            <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-4" *ngIf="product.image" />
 
-                    <div>
-                        <label for="name" class="block font-bold mb-3">Name</label>
-                        <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus fluid />
-                        <small class="text-red-500" *ngIf="submitted && !product.name">Name is required.</small>
+            <div>
+                <label for="name" class="block font-bold mb-3">Name</label>
+                <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus fluid />
+                <small class="text-red-500" *ngIf="submitted && !product.name">Name is required.</small>
+            </div>
+
+            <div>
+                <label for="description" class="block font-bold mb-3">Description</label>
+                <textarea id="description" pTextarea [(ngModel)]="product.description" required rows="3" cols="20" fluid></textarea>
+            </div>
+
+            <div>
+                <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
+                <p-select [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses" optionLabel="label" optionValue="label" placeholder="Select a Status" fluid />
+            </div>
+
+            <div>
+                <span class="block font-bold mb-4">Category</span>
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="flex items-center gap-2 col-span-6">
+                        <p-radiobutton id="category1" name="category" value="Accessories" [(ngModel)]="product.category" />
+                        <label for="category1">Accessories</label>
                     </div>
-
-                    <div>
-                        <label for="description" class="block font-bold mb-3">Description</label>
-                        <textarea id="description" pTextarea [(ngModel)]="product.description" required rows="3" cols="20" fluid></textarea>
+                    <div class="flex items-center gap-2 col-span-6">
+                        <p-radiobutton id="category2" name="category" value="Clothing" [(ngModel)]="product.category" />
+                        <label for="category2">Clothing</label>
                     </div>
-
-                    <div>
-                        <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
-                        <p-select [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses" optionLabel="label" optionValue="label" placeholder="Select a Status" fluid />
+                    <div class="flex items-center gap-2 col-span-6">
+                        <p-radiobutton id="category3" name="category" value="Electronics" [(ngModel)]="product.category" />
+                        <label for="category3">Electronics</label>
                     </div>
-
-                    <div>
-                        <span class="block font-bold mb-4">Category</span>
-                        <div class="grid grid-cols-12 gap-4">
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category1" name="category" value="Accessories" [(ngModel)]="product.category" />
-                                <label for="category1">Accessories</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category2" name="category" value="Clothing" [(ngModel)]="product.category" />
-                                <label for="category2">Clothing</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category3" name="category" value="Electronics" [(ngModel)]="product.category" />
-                                <label for="category3">Electronics</label>
-                            </div>
-                            <div class="flex items-center gap-2 col-span-6">
-                                <p-radiobutton id="category4" name="category" value="Fitness" [(ngModel)]="product.category" />
-                                <label for="category4">Fitness</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-12 gap-4">
-                        <div class="col-span-6">
-                            <label for="price" class="block font-bold mb-3">Price</label>
-                            <p-inputnumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US" fluid />
-                        </div>
-                        <div class="col-span-6">
-                            <label for="quantity" class="block font-bold mb-3">Quantity</label>
-                            <p-inputnumber id="quantity" [(ngModel)]="product.quantity" fluid />
-                        </div>
+                    <div class="flex items-center gap-2 col-span-6">
+                        <p-radiobutton id="category4" name="category" value="Fitness" [(ngModel)]="product.category" />
+                        <label for="category4">Fitness</label>
                     </div>
                 </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-6">
+                    <label for="price" class="block font-bold mb-3">Price</label>
+                    <p-inputnumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US" fluid />
+                </div>
+                <div class="col-span-6">
+                    <label for="quantity" class="block font-bold mb-3">Quantity</label>
+                    <p-inputnumber id="quantity" [(ngModel)]="product.quantity" fluid />
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #footer>
+        <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()"></p-button>
+        <p-button (click)="saveProduct()">
+            <ng-template pTemplate="content">
+                Save
             </ng-template>
+        </p-button>
+    </ng-template>
+</p-dialog>
 
-            <ng-template #footer>
-                <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()"></p-button>
-                <p-button (click)="saveProduct()">
-                    <ng-template pTemplate="content"> Save </ng-template>
-                </p-button>
-            </ng-template>
-        </p-dialog>
-<p-confirmDialog [style]="{ width: '350px' }" [draggable]="false">
-  <ng-template pTemplate="header">
-<div style=" text-align: center; padding: 1rem 0;">
-    <span class="material-symbols-outlined" style="font-size: 60px; color: #e53935;">delete</span>
-  </div>
 
-  </ng-template>
-
-  <ng-template pTemplate="footer" let-accept let-reject>
-    <div class="flex justify-center gap-3">
-      <button pButton type="button" label="Cancelar" class="p-button-outlined" (click)="reject()"></button>
-      <button pButton type="button" label="Aceptar" class="p-button-danger" (click)="accept()"></button>
-    </div>
-  </ng-template>
-</p-confirmDialog>
-
+        <p-confirmdialog [style]="{ width: '450px' }" />
     `,
     providers: [MessageService, ProductService, ConfirmationService],
-    styles: [
-        `
-            /* Estilo para los encabezados de la tabla */
-            :host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
-                background-color: var(--secundary-color); /* Color azul oscuro */
-                color: var(--primary-color); /* Texto en blanco para mejor contraste */
-            }
-
-            /* Opcional: Cambiar el estilo del icono de ordenación */
-            :host ::ng-deep .p-datatable .p-sortable-column-icon {
-                color: var(--primary-color);
-            }
-
-            /* Estilos para personalizar el toast */
-            :host ::ng-deep .p-toast-message-success {
-                background-color: white !important;
-                color: #2e8b57 !important;
-                border: 1px solid #2e8b57 !important;
-                border-radius: 8px !important;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
-            }
-
-            /* Oculta el ícono de check de PrimeNG */
-            :host ::ng-deep .p-toast-message-success .p-toast-message-icon {
-                display: none !important;
-            }
-
-            /* Muestra el ícono de Google Material Icons */
-            :host ::ng-deep .p-toast-message-success .p-toast-message-content::before {
-                content: 'check_circle' !important;
-                font-family: 'Material Icons' !important;
-                font-size: 24px !important;
-                color: #2e8b57 !important;
-                margin-right: 8px !important;
-            }
-
-            /* Asegura que el contenido del toast se alinee correctamente */
-            :host ::ng-deep .p-toast-message-success .p-toast-message-content {
-                display: flex !important;
-                align-items: center !important;
-            }
-
-            /* Estilos para el diálogo de confirmación */
-            :host ::ng-deep .p-confirm-dialog .p-dialog-content .pi.pi-exclamation-triangle {
-                display: none !important;
-            }
-
-            :host ::ng-deep .p-confirm-dialog .p-dialog-content::before {
-                content: 'check_circle' !important;
-                font-family: 'Material Icons' !important;
-                font-size: 24px !important;
-                color: #2e8b57 !important;
-                margin-right: 8px !important;
-            }
-
-            /* Estilo para eliminar ícono del botón Save */
-            :host ::ng-deep .p-dialog-footer .p-button:not(.p-button-icon-only) .p-button-icon-left {
-                display: none !important;
-            }
-
-            :host ::ng-deep .custom-flat-icon-button {
-                background: transparent !important;
-                border: none !important;
-                box-shadow: none !important;
-                padding: 0.5rem !important;
-                font-size: 20px;
-                border-radius: 0.375rem;
-                transition: background-color 0.2s ease;
-            }
-
-            /* Específicos */
-            :host ::ng-deep .custom-flat-icon-button-edit {
-                color: var(--primary-color) !important; /* Azul */
-            }
-
-            :host ::ng-deep .custom-flat-icon-button-delete {
-                color: var(--color-danger) !important; /* Rojo */
-            }
-
-            /* Hover opcional */
-            :host ::ng-deep .custom-flat-icon-button:hover {
-                background-color: rgba(0, 0, 0, 0.04);
-            }
+    styles: [`
+    /* Estilo para los encabezados de la tabla */
+    :host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+        background-color: var(--secundary-color); /* Color azul oscuro */
+        color: var(--primary-color); /* Texto en blanco para mejor contraste */
+    }
 
 
 
+    /* Opcional: Cambiar el estilo del icono de ordenación */
+    :host ::ng-deep .p-datatable .p-sortable-column-icon {
+        color: var(--primary-color);
+    }
 
-        `
-    ]
+    /* Estilos para personalizar el toast */
+    :host ::ng-deep .p-toast-message-success {
+        background-color: white !important;
+        color: #2E8B57 !important;
+        border: 1px solid #2E8B57 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Oculta el ícono de check de PrimeNG */
+    :host ::ng-deep .p-toast-message-success .p-toast-message-icon {
+        display: none !important;
+    }
+
+    /* Muestra el ícono de Google Material Icons */
+    :host ::ng-deep .p-toast-message-success .p-toast-message-content::before {
+        content: "check_circle" !important;
+        font-family: 'Material Icons' !important;
+        font-size: 24px !important;
+        color: #2E8B57 !important;
+        margin-right: 8px !important;
+    }
+
+    /* Asegura que el contenido del toast se alinee correctamente */
+    :host ::ng-deep .p-toast-message-success .p-toast-message-content {
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    /* Estilos para el diálogo de confirmación */
+    :host ::ng-deep .p-confirm-dialog .p-dialog-content .pi.pi-exclamation-triangle {
+        display: none !important;
+    }
+
+    :host ::ng-deep .p-confirm-dialog .p-dialog-content::before {
+        content: "check_circle" !important;
+        font-family: 'Material Icons' !important;
+        font-size: 24px !important;
+        color: #2E8B57 !important;
+        margin-right: 8px !important;
+    }
+
+    /* Estilo para eliminar ícono del botón Save */
+    :host ::ng-deep .p-dialog-footer .p-button:not(.p-button-icon-only) .p-button-icon-left {
+        display: none !important;
+    }
+
+    /* Estilos para los diálogos de confirmación personalizados */
+    :host ::ng-deep .p-confirm-dialog .p-dialog-content {
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    :host ::ng-deep .p-confirm-dialog .p-dialog-header {
+        display: none;
+    }
+
+    :host ::ng-deep .p-confirm-dialog .p-dialog-footer {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    :host ::ng-deep .p-confirm-dialog .p-confirm-dialog-message {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    /* Estilo para el icono de alerta circular (eliminación) */
+    .alert-circ-icon::before {
+        content: "error_outline";
+        font-family: 'Material Icons';
+        font-size: 48px;
+        color: #F44336;
+    }
+
+    /* Estilo para el icono de alerta exterior (operación general) */
+    .alert-out-icon::before {
+        content: "warning_amber";
+        font-family: 'Material Icons';
+        font-size: 48px;
+        color: #FF9800;
+    }
+
+    /* Estilo para los botones de confirmación */
+    :host ::ng-deep .p-confirm-dialog .p-button {
+        min-width: 100px;
+        border-radius: 4px;
+    }
+
+    :host ::ng-deep .p-confirm-dialog .p-button-text {
+        border: 1px solid #ccc;
+    }
+
+
+
+`]
 })
-export class Crud implements OnInit {
+export class UserCrudComponent implements OnInit {
     productDialog: boolean = false;
     products = signal<Product[]>([]);
     product!: Product;
@@ -416,25 +432,33 @@ export class Crud implements OnInit {
         this.submitted = false;
     }
 deleteProduct(product: Product) {
-    this.confirmationService.confirm({
-        header: 'Confirmar eliminación',
-        message: `¿Estás seguro de eliminar ${product.name}?`,
-        icon: '',
-        acceptLabel: 'Aceptar',
-        rejectLabel: 'Cancelar',
-        accept: () => {
-            this.products.set(this.products().filter((val) => val.id !== product.id));
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Éxito',
-                detail: 'Producto eliminado',
-                life: 3000
-            });
-        }
-    });
+  this.confirmationService.confirm({
+    message: `
+      <div style="display: flex; justify-content: center; align-items: center; width: 100%; min-height: 80px; margin-bottom: 16px;">
+        <i class="material-symbols-outlined text-red-600 text-6xl" style="display: block;">delete</i>
+      </div>
+      <div style="text-align: center;">
+        <strong>¿Estás seguro de eliminar ${product.name}?</strong>
+        <p style="margin-top: 8px;">Una vez que aceptes, no podrás revertir los cambios.</p>
+      </div>
+    `,
+    accept: () => {
+      this.products.set(this.products().filter((val) => val.id !== product.id));
+      this.product = {};
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Producto eliminado',
+        life: 3000
+      });
+    },
+    rejectLabel: 'Cancelar',
+    acceptLabel: 'Aceptar',
+       rejectButtonStyleClass: 'p-button-outlined p-button-secondary', // outlined gris
+    acceptButtonStyleClass: 'p-button p-button-danger' // fondo rojo
+
+  });
 }
-
-
 
     findIndexById(id: string): number {
         let index = -1;
@@ -471,29 +495,30 @@ deleteProduct(product: Product) {
 
     saveProduct() {
         this.submitted = true;
+        console.log('Guardando producto:', this.product); // Depuración
         let _products = this.products();
 
         if (this.product.name?.trim()) {
             if (this.product.id) {
                 this.confirmationService.confirm({
-                    message: `¿Estás seguro que deseas continuar con esta operación?<br><small>Una vez que aceptes, los cambios reemplazarán la información actual.</small>`,
-                    header: 'Confirmar Actualización',
-                    icon: 'pi pi-info-circle',
-                    acceptButtonStyleClass: 'p-button-warning',
-                    rejectButtonStyleClass: 'p-button-text',
-                    acceptLabel: 'Aceptar',
-                    rejectLabel: 'Cancelar',
+                    message: `Do you want to save changes to ${this.product.name}? This will update the product details.`,
+                    header: 'Confirm Update',
+                    icon: 'pi pi-exclamation-triangle',
                     accept: () => {
                         _products[this.findIndexById(this.product.id!)] = this.product;
                         this.products.set([..._products]);
                         this.messageService.add({
+
                             severity: 'success',
-                            summary: 'Éxito',
-                            detail: `¡${this.product.name} actualizado correctamente!`,
+                            summary: 'Success',
+                            detail: `Updated ${this.product.name} successfully!`,
                             life: 3000
                         });
                         this.productDialog = false;
                         this.product = {};
+                    },
+                    reject: () => {
+                        console.log('Actualización cancelada'); // Depuración
                     }
                 });
             } else {
@@ -502,18 +527,19 @@ deleteProduct(product: Product) {
                 this.products.set([..._products, this.product]);
                 this.messageService.add({
                     severity: 'success',
-                    summary: 'Éxito',
-                    detail: `¡${this.product.name} creado correctamente!`,
+                    summary: 'Success',
+                    detail: `Created ${this.product.name} successfully!`,
                     life: 3000
                 });
                 this.productDialog = false;
                 this.product = {};
             }
         } else {
+            console.log('Error: El nombre del producto es requerido'); // Depuración
             this.messageService.add({
                 severity: 'error',
                 summary: 'Error',
-                detail: 'El nombre es requerido',
+                detail: 'Name is required',
                 life: 3000
             });
         }

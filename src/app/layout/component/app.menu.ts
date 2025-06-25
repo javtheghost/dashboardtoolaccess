@@ -32,22 +32,25 @@ export class AppMenu {
             },
 
             {
-                label: 'Pages',
-                icon: 'pi pi-fw pi-briefcase',
+                label: 'Gestión',
+                icon: 'material-symbols-outlined',
                 routerLink: ['/pages'],
                 items: [
+
                     {
-                        label: 'Landing',
-                        icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/landing']
-                    },
-                    {
-                        label: 'Auth',
-                        icon: 'pi pi-fw pi-user',
+                        label: 'Usuarios',
+                        icon: 'material-symbols-outlined',
                         items: [
                             {
-                                label: 'Login',
-                                icon: 'pi pi-fw pi-sign-in',
+                                label: 'Usuarios',
+                                icon: 'material-symbols-outlined',
+                                iconText: 'groups',
+                                routerLink: ['/pages/users-list']
+                            },
+                             {
+                                label: 'Roles',
+                                icon: 'material-symbols-outlined',
+                                iconText: 'groups',
                                 routerLink: ['/auth/login']
                             },
                             {
@@ -62,6 +65,7 @@ export class AppMenu {
                             }
                         ]
                     },
+
                     {
                         label: 'Crud',
                         icon: 'pi pi-fw pi-pencil',
@@ -85,32 +89,57 @@ export class AppMenu {
                     {
                         label: 'Ver lista de herramientas',
                         iconText: 'construction',
-                    icon: 'material-symbols-outlined',
+                        icon: 'material-symbols-outlined',
 
                         routerLink: ['/pages/crud'],
                     }
                 ]
             },
-              {
+            {
                 items: [
                     {
                         label: 'Categorías',
                         iconText: 'inventory_2',
-                    icon: 'material-symbols-outlined',
+                        icon: 'material-symbols-outlined',
 
                         routerLink: ['/pages/categories-list'],
                     }
                 ],
 
             },
-              {
+            {
                 items: [
                     {
                         label: 'Multas y Daños',
                         iconText: 'gavel',
-                    icon: 'material-symbols-outlined',
+                        icon: 'material-symbols-outlined',
 
                         routerLink: ['/pages/crud'],
+                    }
+                ],
+
+            },
+
+            {
+                items: [
+                    {
+                        label: 'Perfil',
+                        iconText: 'person',
+                        icon: 'material-symbols-outlined',
+
+                        routerLink: [''],
+                    }
+                ],
+
+            },
+            {
+                items: [
+                    {
+                        label: 'Cerrar sesión',
+                        iconText: 'logout',
+                        icon: 'material-symbols-outlined',
+
+                        routerLink: [''],
                     }
                 ],
 

@@ -68,13 +68,13 @@
 
                 <!-- Botón -->
                 <div class="actions flex flex-col space-y-4">
-                    <button type="submit" class="login-button w-full h-12 text-sm bg-[var(--primary-color)] text-white rounded-lg hover:bg-opacity-90 transition duration-200">Iniciar Sesión</button>
+                    <button  [routerLink]="'/dashboard'"type="submit" class="login-button w-full h-12 text-sm bg-[var(--primary-color)] text-white rounded-lg hover:bg-opacity-90 transition duration-200">Iniciar Sesión</button>
                 </div>
 
                 <!-- Enlace de registro -->
                 <div class="register-link text-center text-sm text-gray-600 dark:text-gray-300">
                     ¿No tienes cuenta?
-                    <a [routerLink]="'/dashboard'" routerLinkActive="router-link-active" class="text-[var(--primary-color)] hover:underline">Iniciar Sesión</a>
+                    <a  routerLinkActive="router-link-active" class="text-[var(--primary-color)] hover:underline">Iniciar Sesión</a>
                 </div>
             </form>
         </div>

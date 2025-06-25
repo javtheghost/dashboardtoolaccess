@@ -15,20 +15,15 @@ import { LayoutService } from '../service/layout.service';
             <button class="layout-menu-button layout-topbar-action" *ngIf="!isAuthRoute" (click)="layoutService.onMenuToggle()">
                 <i class="pi pi-bars"></i>
             </button>
-            <img src="assets/logos/logoHeader.png" alt="logo toolaccess" routerLink="/" class="layout-topbar-logo p-5 " />
+            <img src="assets/logos/logoHeader.png" alt="logo toolaccess" routerLink="/" class="layout-topbar-logo p-5" />
             <a routerLink="/" class="layout-topbar-logo-text">
                 <span>ToolAccess</span>
             </a>
         </div>
 
         <div class="layout-topbar-actions">
-
             <div class="layout-config-menu">
-                <button type="button" class="layout-topbar-action" (click)="toggleDarkMode()">
-                    <i [ngClass]="{ 'pi': true, 'pi-moon': layoutService.isDarkTheme(), 'pi-sun': !layoutService.isDarkTheme() }"></i>
-                </button>
-
-                <div class="relative">
+                <div class="relative" [hidden]="true">
                     <button
                         class="layout-topbar-action layout-topbar-action-highlight"
                         pStyleClass="@next"
@@ -44,58 +39,68 @@ import { LayoutService } from '../service/layout.service';
                 </div>
             </div>
 
-            <!-- Botón que abre el menú desplegable de usuario -->
-           <div class="relative">
-    <button
-    class="layout-topbar-action"
-    pStyleClass="@next"
-    enterFromClass="hidden"
-    enterActiveClass="animate-scalein"
-    leaveToClass="hidden"
-    leaveActiveClass="animate-fadeout"
-    [hideOnOutsideClick]="true"
-  >
-    <i class="pi pi-user"></i>
-  </button>
+            <!-- Menú de usuario -->
+            <div class="relative">
+                <button
+                    class="layout-topbar-action"
+                    pStyleClass="@next"
+                    enterFromClass="hidden"
+                    enterActiveClass="animate-scalein"
+                    leaveToClass="hidden"
+                    leaveActiveClass="animate-fadeout"
+                    [hideOnOutsideClick]="true"
+                >
+                    <i class="pi pi-user"></i>
+                </button>
 
-  <!-- Menú desplegable debe ir justo DESPUÉS del botón, porque usa @next -->
-  <div
-    class="hidden absolute right-0 mt-2 w-40 borderrounded shadow-md z-50"
-    style="background-color: var(--background-color); color: var(--text-color);"
-  >
-    <ul style="list-style:none; margin:0; padding:0;">
-      <li>
-        <a routerLink="/profile" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">
-          Editar perfil
-        </a>
-      </li>
-      <li>
-        <a (click)="logout()" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">
-          Cerrar sesión
-        </a>
-      </li>
-    </ul>
+                <!-- Menú desplegable -->
+                <div
+                    class="hidden absolute right-0 mt-2 w-40 border rounded shadow-md z-50"
+                    style="background-color: var(--background-color); color: var(--text-color);"
+                >
+                    <ul style="list-style: none; margin: 0; padding: 0;">
+                        <li>
+                            <a
+                                routerLink="/profile"
+                                class="block px-4 py-2 cursor-pointer hover-bg-secundary"
+                            >
+                                <i class="material-symbols-outlined">manage_accounts</i>
 
-  </div>
-</div>
+                                Editar perfil
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                (click)="logout()"
+                                class="block px-4 py-2 cursor-pointer hover-bg-secundary"
+                            >
+                                <i class="material-symbols-outlined">logout</i>
 
+                                Cerrar sesión
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
     `
 })
 export class AppTopbar {
-    constructor(public layoutService: LayoutService) { }
-// Propiedad para verificar si es una ruta de autenticación
+    constructor(public layoutService: LayoutService) {}
+
+    // Verifica si la ruta actual es de autenticación
     isAuthRoute: boolean = window.location.pathname.includes('/login') || window.location.pathname.includes('/register');
+
     toggleDarkMode() {
-        this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
+        this.layoutService.layoutConfig.update((state) => ({
+            ...state,
+            darkTheme: !state.darkTheme
+        }));
     }
 
     logout() {
-        // Aquí implementas la lógica de cerrar sesión
+        // Lógica real de logout aquí
         console.log('Cerrando sesión...');
-        // Ejemplo: this.authService.logout(); this.router.navigate(['/login']);
     }
-
-
 }

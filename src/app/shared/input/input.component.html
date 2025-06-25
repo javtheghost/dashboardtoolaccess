@@ -1,0 +1,27 @@
+<div class="relative group">
+  <span
+    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 z-10 group-focus-within:text-[var(--primary-color)]"
+  >
+    {{ icon }}
+  </span>
+
+  <input
+    [type]="type"
+    [id]="id"
+    class="block w-full h-12 rounded-lg border border-gray-300 bg-transparent pl-10 pr-4 text-sm text-gray-900
+           focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)]
+           dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
+    [formControl]="control"
+    required
+    [attr.aria-label]="label"
+  />
+
+  <label
+    [for]="id"
+    class="absolute left-10 top-2 text-gray-600 bg-white px-1 text-sm transition-all
+           group-focus-within:-translate-y-4 group-focus-within:scale-75 group-focus-within:text-[var(--primary-color)]
+           dark:text-gray-400 dark:group-focus-within:text-[var(--primary-color)]"
+  >
+    {{ label }}
+  </label>
+</div>
