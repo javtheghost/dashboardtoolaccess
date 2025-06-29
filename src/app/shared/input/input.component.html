@@ -1,26 +1,57 @@
-<div class="relative group">
-  <span
-    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 z-10 group-focus-within:text-[var(--primary-color)]"
-  >
+<div class="relative">
+  <!-- Ícono -->
+  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 pointer-events-none peer-focus:text-[var(--primary-color)] dark:peer-focus:text-[var(--primary-color)]">
     {{ icon }}
   </span>
 
-  <input
-    [type]="type"
-    [id]="id"
-    class="block w-full h-12 rounded-lg border border-gray-300 bg-transparent pl-10 pr-4 text-sm text-gray-900
-           focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)]
-           dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
-    [formControl]="control"
-    required
-    [attr.aria-label]="label"
-  />
+  <!-- Input o Textarea -->
+  <ng-container *ngIf="!textarea; else textAreaBlock">
+    <input
+      class="peer block w-full h-12 appearance-none rounded-lg border border-gray-300 bg-transparent px-10 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
+      [type]="type"
+      [id]="id"
+      [name]="name || id"
+      [attr.inputmode]="inputmode"
+      [(ngModel)]="model"
+      [required]="required"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      placeholder=" "
+      #inputRef="ngModel"
+    />
 
+    <p *ngIf="required && inputRef.invalid && inputRef.touched" class="text-red-500 text-sm mt-1 ml-1">
+      {{ errorMessage }}
+    </p>
+  </ng-container>
+
+  <!-- Textarea Template -->
+  <ng-template #textAreaBlock>
+    <textarea
+      class="peer block w-full min-h-[3rem] appearance-none rounded-lg border border-gray-300 bg-transparent px-10 pt-4 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
+      [id]="id"
+      [name]="name || id"
+      [rows]="rows"
+      [(ngModel)]="model"
+      [required]="required"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      placeholder=" "
+      #inputRef="ngModel"
+    ></textarea>
+
+    <p *ngIf="required && inputRef.invalid && inputRef.touched" class="text-red-500 text-sm mt-1 ml-1">
+      {{ errorMessage }}
+    </p>
+  </ng-template>
+
+  <!-- Label flotante -->
   <label
     [for]="id"
-    class="absolute left-10 top-2 text-gray-600 bg-white px-1 text-sm transition-all
-           group-focus-within:-translate-y-4 group-focus-within:scale-75 group-focus-within:text-[var(--primary-color)]
-           dark:text-gray-400 dark:group-focus-within:text-[var(--primary-color)]"
+    class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-600 duration-300
+      peer-placeholder-shown:left-10 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100
+      peer-focus:left-3 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-[var(--primary-color)]
+      dark:text-gray-400 dark:peer-focus:text-[var(--primary-color)] bg-white px-1 dark:bg-gray-800"
   >
     {{ label }}
   </label>

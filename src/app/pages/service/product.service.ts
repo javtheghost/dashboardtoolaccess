@@ -16,6 +16,9 @@ export interface Product {
     inventoryStatus?: string;
     category?: string;
     image?: string;
+      subcategory?: string; // Nuevo campo
+  brand?: string; // Nuevo campo
+
     rating?: number;
 }
 
