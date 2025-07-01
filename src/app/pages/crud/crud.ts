@@ -164,69 +164,66 @@ interface ExportColumn {
                 <div class="flex flex-col gap-6">
                     <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-4" *ngIf="product.image" />
 
-                    <div>
+                    <div></div>
+                    <div class="relative">
+                        <!-- Ícono alineado -->
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 pointer-events-none peer-focus:text-[var(--primary-color)] dark:peer-focus:text-[var(--primary-color)]">
+                            edit
+                        </span>
 
+                        <!-- Input -->
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            inputmode="text"
+                            required
+                            class="peer block w-full h-12 appearance-none rounded-lg border border-gray-300 bg-transparent px-10 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
+                            placeholder=" "
+                            aria-label="Nombre"
+                        />
+
+                        <!-- Label flotante -->
+                        <label
+                            for="name"
+                            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-600 duration-300
+      peer-placeholder-shown:left-10 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100
+      peer-focus:left-3 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-[var(--primary-color)]
+      dark:text-gray-400 dark:peer-focus:text-[var(--primary-color)] bg-white px-1 dark:bg-gray-800"
+                        >
+                            Nombre
+                        </label>
                     </div>
-   <div class="relative">
-  <!-- Ícono alineado -->
-  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 pointer-events-none peer-focus:text-[var(--primary-color)] dark:peer-focus:text-[var(--primary-color)]">
-    edit
-  </span>
 
-  <!-- Input -->
-  <input
-    type="text"
-    id="name"
-    name="name"
-    inputmode="text"
-    required
-    class="peer block w-full h-12 appearance-none rounded-lg border border-gray-300 bg-transparent px-10 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
-    placeholder=" "
-    aria-label="Nombre"
-  />
+                    <div class="relative">
+                        <!-- Ícono alineado -->
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 pointer-events-none peer-focus:text-[var(--primary-color)] dark:peer-focus:text-[var(--primary-color)]">
+                            payments
+                        </span>
 
-  <!-- Label flotante -->
-  <label
-    for="name"
-    class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-600 duration-300
+                        <!-- Input -->
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            inputmode="text"
+                            required
+                            class="peer block w-full h-12 appearance-none rounded-lg border border-gray-300 bg-transparent px-10 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
+                            placeholder=" "
+                            aria-label="Nombre"
+                        />
+
+                        <!-- Label flotante -->
+                        <label
+                            for="name"
+                            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-600 duration-300
       peer-placeholder-shown:left-10 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100
       peer-focus:left-3 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-[var(--primary-color)]
       dark:text-gray-400 dark:peer-focus:text-[var(--primary-color)] bg-white px-1 dark:bg-gray-800"
-  >
-    Nombre
-  </label>
-</div>
-
-<div class="relative">
-  <!-- Ícono alineado -->
-  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 pointer-events-none peer-focus:text-[var(--primary-color)] dark:peer-focus:text-[var(--primary-color)]">
-    payments
-  </span>
-
-  <!-- Input -->
-  <input
-    type="text"
-    id="name"
-    name="name"
-    inputmode="text"
-    required
-    class="peer block w-full h-12 appearance-none rounded-lg border border-gray-300 bg-transparent px-10 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
-    placeholder=" "
-    aria-label="Nombre"
-  />
-
-  <!-- Label flotante -->
-  <label
-    for="name"
-    class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-600 duration-300
-      peer-placeholder-shown:left-10 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100
-      peer-focus:left-3 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-[var(--primary-color)]
-      dark:text-gray-400 dark:peer-focus:text-[var(--primary-color)] bg-white px-1 dark:bg-gray-800"
-  >
-    Nombre
-  </label>
-</div>
-
+                        >
+                            Nombre
+                        </label>
+                    </div>
 
                     <div>
                         <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
@@ -244,11 +241,8 @@ interface ExportColumn {
                                 <p-radiobutton id="category2" name="category" value="Clothing" [(ngModel)]="product.category" />
                                 <label for="category2">Clothing</label>
                             </div>
-
                         </div>
                     </div>
-
-
                 </div>
             </ng-template>
 
@@ -259,32 +253,23 @@ interface ExportColumn {
                 </p-button>
             </ng-template>
         </p-dialog>
-<p-confirmDialog [style]="{ width: '350px' }" [draggable]="false">
-  <ng-template pTemplate="header">
-<div style=" text-align: center; padding: 1rem 0;">
-    <span class="material-symbols-outlined" style="font-size: 60px; color: #e53935;">delete</span>
-  </div>
+        <p-confirmDialog [style]="{ width: '350px' }" [draggable]="false">
+            <ng-template pTemplate="header">
+                <div style=" text-align: center; padding: 1rem 0;">
+                    <span class="material-symbols-outlined" style="font-size: 60px; color: #e53935;">delete</span>
+                </div>
+            </ng-template>
 
-  </ng-template>
-
-  <ng-template pTemplate="footer" let-accept let-reject>
-    <div class="flex justify-center gap-3">
-      <button pButton type="button" label="Cancelar" class="p-button-outlined" (click)="reject()"></button>
-      <button pButton type="button" label="Aceptar" class="p-button-danger" (click)="accept()"></button>
-    </div>
-  </ng-template>
-</p-confirmDialog>
-
+            <ng-template pTemplate="footer" let-accept let-reject>
+                <div class="flex justify-center gap-3">
+                    <button pButton type="button" label="Cancelar" class="p-button-outlined" (click)="reject()"></button>
+                    <button pButton type="button" label="Aceptar" class="p-button-danger" (click)="accept()"></button>
+                </div>
+            </ng-template>
+        </p-confirmDialog>
     `,
     providers: [MessageService, ProductService, ConfirmationService],
-    styles: [
-        `
-
-
-
-
-        `
-    ]
+    styles: [``]
 })
 export class Crud implements OnInit {
     productDialog: boolean = false;
@@ -301,7 +286,7 @@ export class Crud implements OnInit {
         private productService: ProductService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService
-    ) { }
+    ) {}
 
     exportCSV() {
         this.dt.exportCSV();
@@ -370,26 +355,24 @@ export class Crud implements OnInit {
         this.productDialog = false;
         this.submitted = false;
     }
-deleteProduct(product: Product) {
-    this.confirmationService.confirm({
-        header: 'Confirmar eliminación',
-        message: `¿Estás seguro de eliminar ${product.name}?`,
-        icon: '',
-        acceptLabel: 'Aceptar',
-        rejectLabel: 'Cancelar',
-        accept: () => {
-            this.products.set(this.products().filter((val) => val.id !== product.id));
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Éxito',
-                detail: 'Producto eliminado',
-                life: 3000
-            });
-        }
-    });
-}
-
-
+    deleteProduct(product: Product) {
+        this.confirmationService.confirm({
+            header: 'Confirmar eliminación',
+            message: `¿Estás seguro de eliminar ${product.name}?`,
+            icon: '',
+            acceptLabel: 'Aceptar',
+            rejectLabel: 'Cancelar',
+            accept: () => {
+                this.products.set(this.products().filter((val) => val.id !== product.id));
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Éxito',
+                    detail: 'Producto eliminado',
+                    life: 3000
+                });
+            }
+        });
+    }
 
     findIndexById(id: string): number {
         let index = -1;

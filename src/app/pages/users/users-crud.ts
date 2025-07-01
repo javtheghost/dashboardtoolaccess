@@ -162,78 +162,165 @@ interface ExportColumn {
 
         <!-- Diálogo para crear/editar producto -->
        <!-- Diálogo para crear/editar producto -->
-<p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Product Details" [modal]="true">
-    <ng-template #content>
-        <div class="flex flex-col gap-6">
-            <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-4" *ngIf="product.image" />
+<p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="Nueva Usuario" [modal]="true">
+            <ng-template #content>
+                <div class="flex flex-col gap-6">
+                    <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.image" class="block m-auto pb-4" *ngIf="product.image" />
 
-            <div>
-                <label for="name" class="block font-bold mb-3">Name</label>
-                <input type="text" pInputText id="name" [(ngModel)]="product.name" required autofocus fluid />
-                <small class="text-red-500" *ngIf="submitted && !product.name">Name is required.</small>
-            </div>
+                    <div></div>
+                    <div class="relative">
+                        <!-- Ícono alineado -->
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 pointer-events-none peer-focus:text-[var(--primary-color)] dark:peer-focus:text-[var(--primary-color)]">
+                            person
+                        </span>
 
-            <div>
-                <label for="description" class="block font-bold mb-3">Description</label>
-                <textarea id="description" pTextarea [(ngModel)]="product.description" required rows="3" cols="20" fluid></textarea>
-            </div>
+                        <!-- Input -->
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            inputmode="text"
+                            required
+                            class="peer block w-full h-12 appearance-none rounded-lg border border-gray-300 bg-transparent px-10 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
+                            placeholder=" "
+                            aria-label="Nombre"
+                        />
 
-            <div>
-                <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
-                <p-select [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses" optionLabel="label" optionValue="label" placeholder="Select a Status" fluid />
-            </div>
+                        <!-- Label flotante -->
+                        <label
+                            for="name"
+                            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-600 duration-300
+      peer-placeholder-shown:left-10 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100
+      peer-focus:left-3 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-[var(--primary-color)]
+      dark:text-gray-400 dark:peer-focus:text-[var(--primary-color)] bg-white px-1 dark:bg-gray-800"
+                        >
+                            Nombre
+                        </label>
+                    </div>
+ <div class="relative">
+                        <!-- Ícono alineado -->
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 pointer-events-none peer-focus:text-[var(--primary-color)] dark:peer-focus:text-[var(--primary-color)]">
+                            person
+                        </span>
 
-            <div>
-                <span class="block font-bold mb-4">Category</span>
-                <div class="grid grid-cols-12 gap-4">
-                    <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category1" name="category" value="Accessories" [(ngModel)]="product.category" />
-                        <label for="category1">Accessories</label>
+                        <!-- Input -->
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            inputmode="text"
+                            required
+                            class="peer block w-full h-12 appearance-none rounded-lg border border-gray-300 bg-transparent px-10 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
+                            placeholder=" "
+                            aria-label="Nombre"
+                        />
+
+                        <!-- Label flotante -->
+                        <label
+                            for="name"
+                            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-600 duration-300
+      peer-placeholder-shown:left-10 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100
+      peer-focus:left-3 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-[var(--primary-color)]
+      dark:text-gray-400 dark:peer-focus:text-[var(--primary-color)] bg-white px-1 dark:bg-gray-800"
+                        >
+                            Apellido Paterno
+                        </label>
                     </div>
-                    <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category2" name="category" value="Clothing" [(ngModel)]="product.category" />
-                        <label for="category2">Clothing</label>
+ <div class="relative">
+                        <!-- Ícono alineado -->
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 pointer-events-none peer-focus:text-[var(--primary-color)] dark:peer-focus:text-[var(--primary-color)]">
+                            person
+                        </span>
+
+                        <!-- Input -->
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            inputmode="text"
+                            required
+                            class="peer block w-full h-12 appearance-none rounded-lg border border-gray-300 bg-transparent px-10 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
+                            placeholder=" "
+                            aria-label="Nombre"
+                        />
+
+                        <!-- Label flotante -->
+                        <label
+                            for="name"
+                            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-600 duration-300
+      peer-placeholder-shown:left-10 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100
+      peer-focus:left-3 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-[var(--primary-color)]
+      dark:text-gray-400 dark:peer-focus:text-[var(--primary-color)] bg-white px-1 dark:bg-gray-800"
+                        >
+                            Apellido Materno
+                        </label>
                     </div>
-                    <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category3" name="category" value="Electronics" [(ngModel)]="product.category" />
-                        <label for="category3">Electronics</label>
+
+                    <div class="relative">
+                        <!-- Ícono alineado -->
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-300 pointer-events-none peer-focus:text-[var(--primary-color)] dark:peer-focus:text-[var(--primary-color)]">
+                            mail
+                        </span>
+
+                        <!-- Input -->
+                        <input
+                            type="text"
+                            id="correo electrónico"
+                            name="correo electrónico"
+                            inputmode="text"
+                            required
+                            class="peer block w-full h-12 appearance-none rounded-lg border border-gray-300 bg-transparent px-10 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
+                            placeholder=" "
+                            aria-label="correo electrónico"
+                        />
+
+                        <!-- Label flotante -->
+                        <label
+                            for="correo electrónico"
+                            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-600 duration-300
+      peer-placeholder-shown:left-10 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100
+      peer-focus:left-3 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-[var(--primary-color)]
+      dark:text-gray-400 dark:peer-focus:text-[var(--primary-color)] bg-white px-1 dark:bg-gray-800"
+                        >
+                            Correo Electrónico
+                        </label>
                     </div>
-                    <div class="flex items-center gap-2 col-span-6">
-                        <p-radiobutton id="category4" name="category" value="Fitness" [(ngModel)]="product.category" />
-                        <label for="category4">Fitness</label>
+
+                    <div>
+                        <label for="inventoryStatus" class="block font-bold mb-3">Inventory Status</label>
+                        <p-select [(ngModel)]="product.inventoryStatus" inputId="inventoryStatus" [options]="statuses" optionLabel="label" optionValue="label" placeholder="Select a Status" fluid />
                     </div>
+
+
+
                 </div>
-            </div>
-
-            <div class="grid grid-cols-12 gap-4">
-                <div class="col-span-6">
-                    <label for="price" class="block font-bold mb-3">Price</label>
-                    <p-inputnumber id="price" [(ngModel)]="product.price" mode="currency" currency="USD" locale="en-US" fluid />
-                </div>
-                <div class="col-span-6">
-                    <label for="quantity" class="block font-bold mb-3">Quantity</label>
-                    <p-inputnumber id="quantity" [(ngModel)]="product.quantity" fluid />
-                </div>
-            </div>
-        </div>
-    </ng-template>
-
-    <ng-template #footer>
-        <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()"></p-button>
-        <p-button (click)="saveProduct()">
-            <ng-template pTemplate="content">
-                Save
             </ng-template>
-        </p-button>
-    </ng-template>
-</p-dialog>
 
+            <ng-template #footer>
+                <p-button label="Cancel" icon="pi pi-times" text (click)="hideDialog()"></p-button>
+                <p-button (click)="saveProduct()">
+                    <ng-template pTemplate="content"> Guardar </ng-template>
+                </p-button>
+            </ng-template>
+        </p-dialog>
+        <p-confirmDialog [style]="{ width: '350px' }" [draggable]="false">
+            <ng-template pTemplate="header">
+                <div style=" text-align: center; padding: 1rem 0;">
+                    <span class="material-symbols-outlined" style="font-size: 60px; color: #e53935;">delete</span>
+                </div>
+            </ng-template>
 
-        <p-confirmdialog [style]="{ width: '450px' }" />
+            <ng-template pTemplate="footer" let-accept let-reject>
+                <div class="flex justify-center gap-3">
+                    <button pButton type="button" label="Cancelar" class="p-button-outlined" (click)="reject()"></button>
+                    <button pButton type="button" label="Aceptar" class="p-button-danger" (click)="accept()"></button>
+                </div>
+            </ng-template>
+        </p-confirmDialog>
     `,
     providers: [MessageService, ProductService, ConfirmationService],
     styles: [`
-   
+
 
 `]
 })
