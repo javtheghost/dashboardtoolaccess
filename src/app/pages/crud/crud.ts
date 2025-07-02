@@ -181,6 +181,7 @@ interface ExportColumn {
                             class="peer block w-full h-12 appearance-none rounded-lg border border-gray-300 bg-transparent px-10 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
                             placeholder=" "
                             aria-label="Nombre"
+                            [(ngModel)]="product.name"
                         />
 
                         <!-- Label flotante -->
@@ -204,24 +205,24 @@ interface ExportColumn {
                         <!-- Input -->
                         <input
                             type="text"
-                            id="name"
-                            name="name"
+                            id="payment"
+                            name="payment"
                             inputmode="text"
                             required
                             class="peer block w-full h-12 appearance-none rounded-lg border border-gray-300 bg-transparent px-10 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)] dark:border-gray-600 dark:text-white dark:focus:border-[var(--primary-color)] dark:focus:ring-[var(--primary-color)]"
                             placeholder=" "
-                            aria-label="Nombre"
+                            aria-label="Payment"
                         />
 
                         <!-- Label flotante -->
                         <label
-                            for="name"
+                            for="payment"
                             class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform text-sm text-gray-600 duration-300
       peer-placeholder-shown:left-10 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100
       peer-focus:left-3 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-[var(--primary-color)]
       dark:text-gray-400 dark:peer-focus:text-[var(--primary-color)] bg-white px-1 dark:bg-gray-800"
                         >
-                            Nombre
+                            Payment
                         </label>
                     </div>
 
@@ -253,17 +254,30 @@ interface ExportColumn {
                 </p-button>
             </ng-template>
         </p-dialog>
+
         <p-confirmDialog [style]="{ width: '350px' }" [draggable]="false">
             <ng-template pTemplate="header">
-                <div style=" text-align: center; padding: 1rem 0;">
-                    <span class="material-symbols-outlined" style="font-size: 60px; color: #e53935;">delete</span>
+                <div style="text-align: center; padding: 1rem 0;">
+                    <span class="material-symbols-outlined" [ngStyle]="{ fontSize: '60px', color: confirmIconColor }">
+                        {{ confirmIcon }}
+                    </span>
                 </div>
             </ng-template>
 
             <ng-template pTemplate="footer" let-accept let-reject>
                 <div class="flex justify-center gap-3">
                     <button pButton type="button" label="Cancelar" class="p-button-outlined" (click)="reject()"></button>
-                    <button pButton type="button" label="Aceptar" class="p-button-danger" (click)="accept()"></button>
+                   <button
+    pButton
+    type="button"
+    label="Aceptar"
+    [ngClass]="{
+        'p-button-danger': confirmIcon === 'delete'
+    }"
+    [ngStyle]="confirmIcon === 'warning' ? { backgroundColor: '#F0AD4E', borderColor: '#F0AD4E' } : {}"
+    (click)="accept()"
+></button>
+   
                 </div>
             </ng-template>
         </p-confirmDialog>
@@ -281,6 +295,10 @@ export class Crud implements OnInit {
     @ViewChild('dt') dt!: Table;
     exportColumns?: ExportColumn[];
     cols?: Column[];
+
+    // Nuevas propiedades para el ícono dinámico
+    confirmIcon: string = 'delete';
+    confirmIconColor: string = '#e53935'; // rojo para delete por defecto
 
     constructor(
         private productService: ProductService,
@@ -334,10 +352,14 @@ export class Crud implements OnInit {
     }
 
     deleteSelectedProducts() {
+        this.confirmIcon = 'delete';
+        this.confirmIconColor = '#e53935';
+
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete the selected products?',
             header: 'Confirm',
-            icon: 'pi pi-exclamation-triangle',
+            acceptLabel: 'Aceptar',
+            rejectLabel: 'Cancelar',
             accept: () => {
                 this.products.set(this.products().filter((val) => !this.selectedProducts?.includes(val)));
                 this.selectedProducts = null;
@@ -355,11 +377,14 @@ export class Crud implements OnInit {
         this.productDialog = false;
         this.submitted = false;
     }
+
     deleteProduct(product: Product) {
+        this.confirmIcon = 'delete';
+        this.confirmIconColor = '#e53935';
+
         this.confirmationService.confirm({
             header: 'Confirmar eliminación',
             message: `¿Estás seguro de eliminar ${product.name}?`,
-            icon: '',
             acceptLabel: 'Aceptar',
             rejectLabel: 'Cancelar',
             accept: () => {
@@ -413,11 +438,13 @@ export class Crud implements OnInit {
 
         if (this.product.name?.trim()) {
             if (this.product.id) {
+                this.confirmIcon = 'warning';
+                this.confirmIconColor = '#FFA726'; // color ámbar para advertencia
+
                 this.confirmationService.confirm({
                     message: `¿Estás seguro que deseas continuar con esta operación?<br><small>Una vez que aceptes, los cambios reemplazarán la información actual.</small>`,
                     header: 'Confirmar Actualización',
-                    icon: 'pi pi-info-circle',
-                    acceptButtonStyleClass: 'p-button-warning',
+                    acceptButtonStyleClass: 'p-button-warning custom-accept-button',
                     rejectButtonStyleClass: 'p-button-text',
                     acceptLabel: 'Aceptar',
                     rejectLabel: 'Cancelar',
