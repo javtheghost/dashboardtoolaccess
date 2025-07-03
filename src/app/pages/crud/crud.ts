@@ -83,14 +83,24 @@ interface ExportColumn {
             [rowsPerPageOptions]="[10, 20, 30]"
         >
             <ng-template #caption>
-                <div class="flex items-center justify-between">
-                    <h5 class="m-0 p-2">Administrar Herramientas</h5>
-                </div>
-                <p-iconfield>
-                    <p-inputicon styleClass="pi pi-search" />
-                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
-                </p-iconfield>
-            </ng-template>
+    <div class="flex items-center justify-between">
+        <h5 class="m-0 p-2">Administrar Herramientas</h5>
+    </div>
+
+    <div class="flex items-center justify-between gap-4 mt-2">
+        <p-iconfield class="flex-1">
+            <p-inputicon styleClass="pi pi-search" />
+            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
+        </p-iconfield>
+
+        <!-- Botón alineado a la derecha -->
+        <div class="flex justify-end">
+            <p-button label="Crear Herramienta" icon="pi pi-plus" (onClick)="openNew()"></p-button>
+        </div>
+    </div>
+</ng-template>
+
+    <!-- Botón para crear nueva subcategoría -->
             <ng-template #header>
                 <tr>
                     <th style="width: 3rem">
