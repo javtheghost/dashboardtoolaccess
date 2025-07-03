@@ -267,17 +267,16 @@ interface ExportColumn {
             <ng-template pTemplate="footer" let-accept let-reject>
                 <div class="flex justify-center gap-3">
                     <button pButton type="button" label="Cancelar" class="p-button-outlined" (click)="reject()"></button>
-                   <button
-    pButton
-    type="button"
-    label="Aceptar"
-    [ngClass]="{
-        'p-button-danger': confirmIcon === 'delete'
-    }"
-    [ngStyle]="confirmIcon === 'warning' ? { backgroundColor: '#F0AD4E', borderColor: '#F0AD4E' } : {}"
-    (click)="accept()"
-></button>
-   
+                    <button
+                        pButton
+                        type="button"
+                        label="Aceptar"
+                        [ngClass]="{
+                            'custom-confirm-button-delete': confirmIcon === 'delete',
+                            'custom-confirm-button-warning': confirmIcon === 'warning'
+                        }"
+                        (click)="accept()"
+                    ></button>
                 </div>
             </ng-template>
         </p-confirmDialog>
@@ -298,7 +297,7 @@ export class Crud implements OnInit {
 
     // Nuevas propiedades para el ícono dinámico
     confirmIcon: string = 'delete';
-    confirmIconColor: string = '#e53935'; // rojo para delete por defecto
+    confirmIconColor: string = '#D9534F'; // rojo para delete por defecto
 
     constructor(
         private productService: ProductService,
@@ -353,7 +352,7 @@ export class Crud implements OnInit {
 
     deleteSelectedProducts() {
         this.confirmIcon = 'delete';
-        this.confirmIconColor = '#e53935';
+        this.confirmIconColor = '#D9534F';
 
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete the selected products?',
@@ -379,9 +378,6 @@ export class Crud implements OnInit {
     }
 
     deleteProduct(product: Product) {
-        this.confirmIcon = 'delete';
-        this.confirmIconColor = '#e53935';
-
         this.confirmationService.confirm({
             header: 'Confirmar eliminación',
             message: `¿Estás seguro de eliminar ${product.name}?`,
