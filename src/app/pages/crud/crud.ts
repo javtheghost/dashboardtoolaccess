@@ -103,7 +103,7 @@ interface ExportColumn {
             <!-- Botón para crear nueva subcategoría -->
             <ng-template #header>
                 <tr>
-                 
+
                     <th style="min-width: 16rem">Code</th>
                     <th pSortableColumn="name" style="min-width:16rem">
                         Name
@@ -131,9 +131,7 @@ interface ExportColumn {
             </ng-template>
             <ng-template #body let-product>
                 <tr>
-                    <td style="width: 3rem">
-                        <p-tableCheckbox [value]="product" />
-                    </td>
+
                     <td style="min-width: 12rem">{{ product.code }}</td>
                     <td style="min-width: 16rem">{{ product.name }}</td>
                     <td>
@@ -333,7 +331,7 @@ export class Crud implements OnInit {
         ];
 
         this.cols = [
-            { field: 'code', header: 'Code', customExportHeader: 'Product Code' },
+            { field: 'code', header: 'Code' },
             { field: 'name', header: 'Name' },
             { field: 'image', header: 'Image' },
             { field: 'price', header: 'Price' },
