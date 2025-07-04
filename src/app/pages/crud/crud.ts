@@ -104,7 +104,7 @@ interface ExportColumn {
             <ng-template #header>
                 <tr>
 
-                    <th style="min-width: 16rem">Code</th>
+                    <th style="min-width: 16rem">Folio</th>
                     <th pSortableColumn="name" style="min-width:16rem">
                         Name
                         <p-sortIcon field="name" />
@@ -331,7 +331,7 @@ export class Crud implements OnInit {
         ];
 
         this.cols = [
-            { field: 'code', header: 'Code' },
+            { field: 'folio', header: 'Folio' },
             { field: 'name', header: 'Name' },
             { field: 'image', header: 'Image' },
             { field: 'price', header: 'Price' },
