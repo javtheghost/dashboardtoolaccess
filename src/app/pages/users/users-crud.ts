@@ -96,9 +96,7 @@ interface ExportColumn {
             </ng-template>
             <ng-template #header>
                 <tr>
-                    <th style="width: 3rem">
-                        <p-tableHeaderCheckbox />
-                    </th>
+                  
                     <th style="min-width: 16rem">Code</th>
                     <th pSortableColumn="name" style="min-width:16rem">
                         Nombres

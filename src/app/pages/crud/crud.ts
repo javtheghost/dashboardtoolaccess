@@ -83,29 +83,27 @@ interface ExportColumn {
             [rowsPerPageOptions]="[10, 20, 30]"
         >
             <ng-template #caption>
-    <div class="flex items-center justify-between">
-        <h5 class="m-0 p-2">Administrar Herramientas</h5>
-    </div>
+                <div class="flex items-center justify-between">
+                    <h5 class="m-0 p-2">Administrar Herramientas</h5>
+                </div>
 
-    <div class="flex items-center justify-between gap-4 mt-2">
-        <p-iconfield class="flex-1">
-            <p-inputicon styleClass="pi pi-search" />
-            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
-        </p-iconfield>
+                <div class="flex items-center justify-between gap-4 mt-2">
+                    <p-iconfield class="flex-1">
+                        <p-inputicon styleClass="pi pi-search" />
+                        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
+                    </p-iconfield>
 
-        <!-- Botón alineado a la derecha -->
-        <div class="flex justify-end">
-            <p-button label="Crear Herramienta" icon="pi pi-plus" (onClick)="openNew()"></p-button>
-        </div>
-    </div>
-</ng-template>
+                    <!-- Botón alineado a la derecha -->
+                    <div class="flex justify-end">
+                        <p-button label="Crear Herramienta" icon="pi pi-plus" (onClick)="openNew()"></p-button>
+                    </div>
+                </div>
+            </ng-template>
 
-    <!-- Botón para crear nueva subcategoría -->
+            <!-- Botón para crear nueva subcategoría -->
             <ng-template #header>
                 <tr>
-                    <th style="width: 3rem">
-                        <p-tableHeaderCheckbox />
-                    </th>
+                 
                     <th style="min-width: 16rem">Code</th>
                     <th pSortableColumn="name" style="min-width:16rem">
                         Name
@@ -150,14 +148,14 @@ interface ExportColumn {
                         <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)" />
                     </td>
                     <td>
-                        <!-- Botón Editar -->
+                        <!-- Botón Editar (opcional azul) -->
                         <p-button (click)="editProduct(product)" styleClass="custom-flat-icon-button custom-flat-icon-button-edit mr-2">
                             <ng-template pTemplate="icon">
                                 <i class="material-symbols-outlined">edit</i>
                             </ng-template>
                         </p-button>
 
-                        <!-- Botón Eliminar -->
+                        <!-- Botón Eliminar (solo ícono rojo sin fondo) -->
                         <p-button (click)="deleteProduct(product)" styleClass="custom-flat-icon-button custom-flat-icon-button-delete">
                             <ng-template pTemplate="icon">
                                 <i class="material-symbols-outlined">delete</i>

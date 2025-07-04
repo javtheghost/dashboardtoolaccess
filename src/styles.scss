@@ -34,11 +34,23 @@
     color: #333;
 }
 
-/* Botones planos */
-.flat-icon-button {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+.custom-flat-icon-button {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: inherit;
+
+
+}
+
+.custom-flat-icon-button-delete {
+  color: var(--color-danger) !important; /* rojo para eliminar, opcional */
+}
+
+.custom-flat-icon-button-edit {
+  color: var(--primary-color) !important; /* azul para editar, opcional */
 }
 
 // hover buttons dialogs confirms
